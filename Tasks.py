@@ -30,12 +30,11 @@ def list():
         print(f"{i["id"]} - {i["title"]}, {i["description"]}")
 
 #Delete Task
-def delete(data):
+def delete():
     id = int(sys.argv[2])
     for i in data:
         if i["id"] == id:
             del i   #Doesn't Work
-    return data
 
 #Update id,title,description or status
 def update():
@@ -61,7 +60,7 @@ if command == "add":
 elif command == "update":
     update()
 elif command == "delete":
-    data = delete(data)
+    delete()
 elif command == "done":
     done()
 elif command == "list":
