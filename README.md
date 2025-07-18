@@ -6,7 +6,5 @@ This Python script is to-do task manager capable of adding, deleting, updating t
 - Type 'python Tasks.py help' to view the commands.
 
 ## Upcoming Updates
-- Adding status with 'add' command
-- Switch command to switch task id's
-- 'list [status]' command 
-- Better optimisation
+- More usage for "status" variable 
+- Better optimization
