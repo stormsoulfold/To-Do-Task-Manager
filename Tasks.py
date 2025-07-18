@@ -36,7 +36,7 @@ def delete():
                 json.dump(data,file,indent=2)
                 print(f"Deleted Task [{id}]")
             break
-    #Order Task ID's
+    #ReOrder Task ID's
     for i in range(len(data)):
         if int(data[i]["id"]) > id:
             data[i]["id"] -= 1
@@ -56,11 +56,31 @@ def update():
                     json.dump(data,file,indent=2)
                     print(f"Updated Task [{no}] {command}")
                 break
+#Switch Tasks
+def switch():
+    no1 = int(sys.argv[2]) - 1
+    no2 = int(sys.argv[3]) - 1
+    with open("tasks.json","w") as file:
+        titleNo1 = data[no1]["title"]
+        descNo1 = data[no1]["description"]
+        statusNo1 = data[no1]["status"]
+
+        data[no1]["title"] = data[no2]["title"]
+        data[no1]["description"] = data[no2]["description"]
+        data[no1]["status"] = data[no2]["status"]
+
+        data[no2]["title"] = titleNo1
+        data[no2]["description"] = descNo1
+        data[no2]["status"] = statusNo1
+
+        json.dump(data,file,indent=2)
+    print(f"Number [{no1+1}] and [{no2+1}] have been swapted")
+
 
 #Print All Commands
 def commands():
     print("--Listing Tasks--")
-    print(">python Tasks.py list [Status]  #Status is optional")
+    print(">python Tasks.py list")
     print("\n--Adding Tasks--")
     print(">python Tasks.py add '[Title]' '[Description]'   #Description is optional")
     print("\n--Deleting Tasks--")
@@ -86,29 +106,32 @@ def done():
                 break
 
 #Main
-try:
-    if os.path.exists("tasks.json"):
-        with open("tasks.json", "r") as file:
-            data = json.load(file)
-    else:
-        data=[]
-except:
-    data = []
+if __name__ == '__main__':
+    try:
+        if os.path.exists("tasks.json"):
+            with open("tasks.json", "r") as file:
+                data = json.load(file)
+        else:
+            data=[]
+    except:
+        data = []
 
-try:
-    command = sys.argv[1]
-    if command == "add":
-        add()
-    elif command == "update":
-        update()
-    elif command == "delete":
-        delete()
-    elif command == "done":
-        done()
-    elif command == "list":
-        list()
-    elif command == "commands" or "help":
-        commands()
-except IndexError:
-    print("-Index Error Occurred. Please Try Again.")
-    print("-Type 'python Tasks.py help' to view commands")
+    try:
+        command = sys.argv[1]
+        if command == "add":
+            add()
+        elif command == "update":
+            update()
+        elif command == "delete":
+            delete()
+        elif command == "done":
+            done()
+        elif command == "list":
+            list()
+        elif command == "switch":
+            switch()
+        elif command == "commands" or "help":
+            commands()
+    except IndexError:
+        print("-Index Error Occurred. Please Try Again.")
+        print("-Type 'python Tasks.py help' to view commands")
